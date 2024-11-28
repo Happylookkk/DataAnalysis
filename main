@@ -1,0 +1,32 @@
+# 数据预览
+library(readxl)
+summary(gangweixinxi)
+
+# 1经验要求
+counts<-table(gangweixinxi["经验要求"])
+percentages<-round((counts/sum(counts))*100,1)
+labels<-paste(names(counts),percentages,"%",sep="")
+colors<-rainbow(length(counts))
+pie(counts,labels = labels,main="经验要求",col=colors,family="sans",cex=0.8,bor="white")
+par(cex.main=1.5,cex.lab=1.2,cex.sub=1.2)
+legend("topright",legend=labels,fill=colors,cex=0.8)
+·结论：数据分析岗位从招聘信息上看，对从业人员的经验要求并不是特别的高，总体上对经验在1-3年的需求占大部分。5-9年或10年以上的需求会比较少。 
+
+# 2学历要求
+counts<-table(gangweixinxi["学历要求"])
+percentages<-round((counts/sum(counts))*100,1)
+labels<-paste(names(counts),percentages,"%",sep="")
+colors<-rainbow(length(counts))
+pie(counts,labels = labels,main="学历要求",col=colors,family="sans",cex=0.8,bor="white")
+par(cex.main=1.5,cex.lab=1.2,cex.sub=1.2)
+legend("topright",legend=labels,fill=colors,cex=0.8)
+·结论：爬取的数据中，有一部分公司没有设定学历要求，由于这一部分的参考价值不大，因此上面的分析中不对这部分数据进行分析。上面的饼图充分展示了数据分析岗位对本科的需求量最大，其次是大专，本科的需求量已经超过了大专需求量的2倍，可见数据分析岗位的基本学历门槛为本科。
+
+# 3岗位大类
+counts<-table(gangweixinxi["岗位大类"])
+percentages<-round((counts/sum(counts))*100,1)
+labels<-paste(names(counts),percentages,"%",sep="")
+colors<-rainbow(length(counts))
+pie(counts,labels = labels,main="岗位大类",col=colors,family="sans",cex=0.8,bor="white")
+par(cex.main=1.5,cex.lab=1.2,cex.sub=1.2)
+legend("topright",legend=labels,fill=colors,cex=0.8)
