@@ -1,32 +1,28 @@
-# 数据预览
-library(readxl)
-summary(gangweixinxi)
+# 导入相关包
+import pandas as pd
+from pandas import DataFrame,Series
+import numpy as np
+import matplotlib.pyplot as plt
 
-# 1经验要求
-counts<-table(gangweixinxi["经验要求"])
-percentages<-round((counts/sum(counts))*100,1)
-labels<-paste(names(counts),percentages,"%",sep="")
-colors<-rainbow(length(counts))
-pie(counts,labels = labels,main="经验要求",col=colors,family="sans",cex=0.8,bor="white")
-par(cex.main=1.5,cex.lab=1.2,cex.sub=1.2)
-legend("topright",legend=labels,fill=colors,cex=0.8)
-·结论：数据分析岗位从招聘信息上看，对从业人员的经验要求并不是特别的高，总体上对经验在1-3年的需求占大部分。5-9年或10年以上的需求会比较少。 
+# 数据准备及预览
+job=pd.read_excel(r"E:\data\岗位数据合并.xlsx")
+## 查看数据的字段（查看前五行数据）
+print(job.head())
 
-# 2学历要求
-counts<-table(gangweixinxi["学历要求"])
-percentages<-round((counts/sum(counts))*100,1)
-labels<-paste(names(counts),percentages,"%",sep="")
-colors<-rainbow(length(counts))
-pie(counts,labels = labels,main="学历要求",col=colors,family="sans",cex=0.8,bor="white")
-par(cex.main=1.5,cex.lab=1.2,cex.sub=1.2)
-legend("topright",legend=labels,fill=colors,cex=0.8)
-·结论：爬取的数据中，有一部分公司没有设定学历要求，由于这一部分的参考价值不大，因此上面的分析中不对这部分数据进行分析。上面的饼图充分展示了数据分析岗位对本科的需求量最大，其次是大专，本科的需求量已经超过了大专需求量的2倍，可见数据分析岗位的基本学历门槛为本科。
+# 岗位需求数量排名TOP10的城市（条形图）
+plt.rcParams["font.sans-serif"]='SimHei'
+plt.rcParams["axes.unicode_minus"]=False
+diqu1=job["城市"].value_counts().head(10)
+x=diqu1.index
+y=diqu1.values
+plt.bar(x,y,width=0.7,label="岗位数量")
+for a,b in zip(x,y):
+    plt.text(a,b,b,ha="center",va="bottom",fontsize=10)
+plt.legend()   
+plt.xlabel("城市")
+plt.ylabel("岗位数量")
 
-# 3岗位大类
-counts<-table(gangweixinxi["岗位大类"])
-percentages<-round((counts/sum(counts))*100,1)
-labels<-paste(names(counts),percentages,"%",sep="")
-colors<-rainbow(length(counts))
-pie(counts,labels = labels,main="岗位大类",col=colors,family="sans",cex=0.8,bor="white")
-par(cex.main=1.5,cex.lab=1.2,cex.sub=1.2)
-legend("topright",legend=labels,fill=colors,cex=0.8)
+# 不同城市的薪资分布情况（箱线图）
+from pylab import *
+mpl.rcParams['font.sans-serif'] = ['SimHei']
+job.boxplot(column='薪资下限',by='城市',figsize=(13,8))
