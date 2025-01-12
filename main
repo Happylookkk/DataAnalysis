@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 
 # 数据准备及预览
 job=pd.read_excel(r"E:\data\岗位数据合并.xlsx")
-## 查看数据的字段（查看前五行数据）
 print(job.head())
 
 # 岗位需求数量排名TOP10的城市（条形图）
